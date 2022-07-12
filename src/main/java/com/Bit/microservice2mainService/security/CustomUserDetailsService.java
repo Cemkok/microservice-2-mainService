@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		User user = userService.findByUsername(username)
 				.orElseThrow(()-> new UsernameNotFoundException("User not found with this username: " + username));
 		
-		return null;
+		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword());
 	}
 	
 	
