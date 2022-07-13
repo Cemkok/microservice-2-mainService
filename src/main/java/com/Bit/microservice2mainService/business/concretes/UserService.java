@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.Bit.microservice2mainService.business.abstracts.UserService;
+import com.Bit.microservice2mainService.business.abstracts.IUserService;
 import com.Bit.microservice2mainService.dataAccess.UserDao;
 import com.Bit.microservice2mainService.entities.User;
 
@@ -25,7 +25,7 @@ import com.Bit.microservice2mainService.entities.User;
  */	
 
 @Service
-public class UserManager implements UserService{
+public class UserService implements IUserService{
 	
 	private UserDao userDao;
 	private PasswordEncoder passwordEncoder;
@@ -35,7 +35,7 @@ public class UserManager implements UserService{
 	 * @param passwordEncoder
 	 */
 	@Autowired
-	public UserManager(UserDao userDao, PasswordEncoder passwordEncoder) {
+	public UserService(UserDao userDao, PasswordEncoder passwordEncoder) {
 		super();
 		this.userDao = userDao;
 		this.passwordEncoder = passwordEncoder;

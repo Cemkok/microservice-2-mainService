@@ -16,7 +16,7 @@ import com.Bit.microservice2mainService.entities.User;
  * @Time   13:42:22
  * @See
  */
-public interface UserService {
+public interface IUserService {
 
 	/**
 	 * @param user

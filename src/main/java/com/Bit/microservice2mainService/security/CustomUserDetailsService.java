@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.Bit.microservice2mainService.business.abstracts.UserService;
+import com.Bit.microservice2mainService.business.abstracts.IUserService;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
@@ -24,13 +24,13 @@ import com.Bit.microservice2mainService.entities.User;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private  UserService userService;
+	private  IUserService iUserService;
 	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		User user = userService.findByUsername(username)
+		User user = iUserService.findByUsername(username)
 				.orElseThrow(()-> new UsernameNotFoundException("User not found with this username: " + username));
 		
 		return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword());
