@@ -18,9 +18,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.Bit.microservice2mainService.security.jwt.JwtAuthorizationFilter;
 
 /**
  * @author cemko
@@ -53,6 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  
 	  .anyRequest().authenticated();
 	  
+	  http.addFilterBefore(JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+	  
 	
 	}
 	
@@ -68,6 +72,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return  new BCryptPasswordEncoder();
 	}
 		
+	@Bean
+	public JwtAuthorizationFilter JwtAuthorizationFilter() {
+		
+		return new JwtAuthorizationFilter();
+		
+	}
 	
 					
 	
