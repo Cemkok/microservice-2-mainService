@@ -57,6 +57,18 @@ public class RetrofitConfiguration {
 	  
 	  
 	  }
+	  @Bean
+	  public IExternalServiceRequest customerServiceRequest(Retrofit.Builder secureKeyBuilder,
+	  
+	  @Value("${external.service.url}")String baseUrl) 
+	  {
+	  
+	  return secureKeyBuilder
+			  .baseUrl(baseUrl)
+			  .build().create(IExternalServiceRequest.class);
+	  }
+	   
 	  
 	
 }
+ 
