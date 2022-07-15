@@ -9,7 +9,7 @@ public class Microservice2MainServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Microservice2MainServiceApplication.class, args);
-	}
+	}  
 	
 
 }

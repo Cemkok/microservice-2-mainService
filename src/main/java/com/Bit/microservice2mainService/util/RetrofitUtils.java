@@ -18,6 +18,7 @@ import retrofit2.Response;
  * @See
  */
 @Slf4j
+
 public class RetrofitUtils {
 	public static <T> T executeInBlock(Call<T> request)
 	{

@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.google.gson.Gson;
 
@@ -23,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @Time   17:32:49 
  * @See
  */
+@Configuration
 public class RetrofitConfiguration {
 
 	 
@@ -58,7 +60,7 @@ public class RetrofitConfiguration {
 	  
 	  }
 	  @Bean
-	  public IExternalServiceRequest customerServiceRequest(Retrofit.Builder secureKeyBuilder,
+	  public IExternalServiceRequest externalServiceRequest(Retrofit.Builder secureKeyBuilder,
 	  
 	  @Value("${external.service.url}")String baseUrl) 
 	  {
