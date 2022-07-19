@@ -6,15 +6,20 @@
   
 
   
-  import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import
   org.springframework.stereotype.Service;
   
   import com.Bit.microservice2mainService.business.abstracts.IExternalService;
   import com.Bit.microservice2mainService.request.IExternalServiceRequest;
-  import com.Bit.microservice2mainService.util.RetrofitUtils; import
+  import com.Bit.microservice2mainService.util.RetrofitUtils;
+import com.Bit.microservice2mainService.util.constants.Logging;
+import
   com.google.gson.JsonElement;
+
+import lombok.extern.slf4j.Slf4j;
   
  /**
 	 * @author Cem Kok
@@ -23,7 +28,7 @@ import
 	 * @see
 	 */
 
-  
+  @Slf4j
   @Service 
   public class ExternalService implements IExternalService {
 	  
@@ -33,6 +38,10 @@ import
 	  
 		  
 		  @Override public JsonElement addCustomer(JsonElement requestBody) {
+				log.info("[ExternalService addCustomer method is called ]--" + "[input parameter ="+requestBody+"]");
+						
+						Logging.internalLogDetail();
+				 
 		  
 		  return
 		  RetrofitUtils.executeInBlock(externalServiceRequest.saveCustomer(requestBody)
@@ -43,18 +52,28 @@ import
 		  
 		  
 		  @Override public void deleteCustomer(int customerId) {
+			  log.info("[ExternalService deleteCustomer method is called ]--" + "[input parameter ="+customerId+"]");
+				
+				Logging.internalLogDetail();
+		 
 		  RetrofitUtils.executeInBlock(externalServiceRequest.deleteCustomer(customerId
 		  )); }
 		  
 		  
 		  
 		  @Override public JsonElement getAllCustomers(int pageNo, int pageSize) {
-		  System.out.println("ben çalıştım"); return
+
+			  log.info("[ExternalService getAllCustomers method is called ]--" + "[input parameter =pageNo-pageSize"+pageNo+pageSize+"]");
+				
+				Logging.internalLogDetail(); 
+				return
 		  RetrofitUtils.executeInBlock(externalServiceRequest.getAllCustomers(pageNo, pageSize)); } 
   
   
-  	@Override public JsonElement getByCustomerIdResult(Long id) {
-	  System.out.println("ben çalıştım");
+  	@Override public JsonElement getByCustomerId(Long id) {
+		  log.info("[ExternalService getByCustomerId method is called ]--" + "[input parameter =pageNo-pageSize"+id+"]");
+			
+			Logging.internalLogDetail(); 
 	  
 	  return RetrofitUtils.executeInBlock(externalServiceRequest.getByCustomerIdResult(id)); } }
 		  

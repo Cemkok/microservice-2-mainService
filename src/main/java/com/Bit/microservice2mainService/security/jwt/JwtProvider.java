@@ -28,21 +28,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.Bit.microservice2mainService.security.UserPrincipal;
+import com.Bit.microservice2mainService.util.constants.Logging;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Cem Kok
- * @Date   12 Tem 2022
- * @Time   18:08:49
+ * @Date 12 Tem 2022
+ * @Time 18:08:49
  * @see
  */
-
+@Slf4j
 @Component
-public class JwtProvider  implements IJwtProvider{
-	
+public class JwtProvider implements IJwtProvider {
+
 	@Value("${authentication.jwt.expiration-in-ms}")
 	private Long JWT_EXPIRATION_IN_MS;
 
@@ -78,9 +80,12 @@ public class JwtProvider  implements IJwtProvider{
 		}
 
 	}
-	
+
 	@Override
 	public String generateToken(UserPrincipal authentication) {
+		log.info("[generateToken method is called ]--" + "[input parameter =" + authentication + "]");
+
+		Logging.internalLogDetail();
 
 		String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining());
@@ -89,16 +94,18 @@ public class JwtProvider  implements IJwtProvider{
 				.claim("roles", authorities).setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
 				.signWith(jwtPrivateKey, SignatureAlgorithm.RS512).compact();
 
-  	}
+	}
 
-	
 	@Override
 	public Authentication getAuhentication(HttpServletRequest request) {
+		log.info("[getAuhentication method is called ]--" + "[input parameter =" + request + "]");
+
+		Logging.internalLogDetail();
 		String token = resolveToken(request);
 		if (token == null) {
 			return null;
 		}
-		
+
 		Claims claims = Jwts.parserBuilder().setSigningKey(jwtPublicKey).build().parseClaimsJws(token).getBody();
 		String username = claims.getSubject();
 		Long userId = claims.get("userId", Long.class);
@@ -110,15 +117,17 @@ public class JwtProvider  implements IJwtProvider{
 		return username != null ? new UsernamePasswordAuthenticationToken(userDetails, null, authorities) : null;
 
 	}
-	
-  	@Override
+
+	@Override
 	public boolean isTokenValid(HttpServletRequest request) {
+		log.info("[isTokenValid method is called ]--" + "[input parameter =" + request + "]");
+
+		Logging.internalLogDetail();
 		String token = resolveToken(request);
 		if (token == null) {
 			return false;
 		}
-		Claims claims = Jwts.parserBuilder().setSigningKey(jwtPublicKey)
-				.build().parseClaimsJws(token).getBody();
+		Claims claims = Jwts.parserBuilder().setSigningKey(jwtPublicKey).build().parseClaimsJws(token).getBody();
 
 		if (claims.getExpiration().before(new Date()))
 
@@ -130,6 +139,9 @@ public class JwtProvider  implements IJwtProvider{
 	}
 
 	private String resolveToken(HttpServletRequest request) {
+		log.info("[resolveToken method is called ]--" + "[input parameter =" + request + "]");
+
+		Logging.internalLogDetail();
 		String bearerToken = request.getHeader(JWT_HEADER_STRING);
 
 		if (bearerToken != null && bearerToken.startsWith(JWT_TOKEN_PREFIX)) {
@@ -140,6 +152,9 @@ public class JwtProvider  implements IJwtProvider{
 	}
 
 	private KeyFactory getKeyFactory() {
+		log.info("[getKeyFactory method is called ]--" + "[input parameter =no args" + "]");
+
+		Logging.internalLogDetail();
 		try {
 			return KeyFactory.getInstance("RSA");
 		} catch (NoSuchAlgorithmException e) {
@@ -148,5 +163,3 @@ public class JwtProvider  implements IJwtProvider{
 	}
 
 }
-
-

@@ -6,6 +6,7 @@ package com.Bit.microservice2mainService.controller;
 
 
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Bit.microservice2mainService.business.abstracts.IExternalService;
+import com.Bit.microservice2mainService.util.constants.Logging;
 import com.google.gson.JsonElement;
 
 import lombok.extern.slf4j.Slf4j;
@@ -189,13 +191,24 @@ public class ExternalController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addCustomer(@RequestBody JsonElement customer) {
 
+		log.info("[addCustomer method is called ]--" + "[input parameter = " + customer + "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(new ResponseEntity<>(customer, HttpStatus.CREATED))
+				+ "]");
+
+				Logging.internalLogDetail();
+
 		return ResponseEntity.ok(externalService.addCustomer(customer));
 	}
 
 	@DeleteMapping("{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) {
-
+		
 		externalService.deleteCustomer(customerId);
+		log.info("[deleteCustomer method is called ]--" + "[input parameter = " + customerId + "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(new ResponseEntity<>( HttpStatus.OK))
+				+ "]");
+
+				Logging.internalLogDetail();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -204,15 +217,24 @@ public class ExternalController {
 	@GetMapping("/getAll/{pageNo}/{pageSize}")
 	public ResponseEntity<?> getAllCustomers(@PathVariable int pageNo, @PathVariable int pageSize) {
 		
-		
+		log.info("[getAllCustomers method is called ]--" + "[input parameter = pageNo-pageSize" + pageNo + pageSize+ "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(ResponseEntity.ok(externalService.getAllCustomers(pageNo, pageSize)))
+				+ "]");
+
+				Logging.internalLogDetail();
 		
 		return ResponseEntity.ok(externalService.getAllCustomers(pageNo, pageSize));
 	}
 	@GetMapping("/getByIdResult/{id}")
-	public ResponseEntity<?>getByCustomerIdResult(@PathVariable Long id) {
+	public ResponseEntity<?>getByCustomerId(@PathVariable Long id) {
+		log.info("[getByCustomerId method is called ]--" + "[input parameter = pageNo-pageSize" +id+ "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(ResponseEntity.ok(externalService.getByCustomerId(id)))
+				+ "]");
+
+				Logging.internalLogDetail();
 		
 		
 		
-		return ResponseEntity.ok(externalService.getByCustomerIdResult(id));
+		return ResponseEntity.ok(externalService.getByCustomerId(id));
 	}
 }

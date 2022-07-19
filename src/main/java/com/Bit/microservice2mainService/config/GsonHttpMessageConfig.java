@@ -8,15 +8,20 @@ package com.Bit.microservice2mainService.config;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
+import com.Bit.microservice2mainService.util.constants.Logging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Cem Kok
@@ -24,12 +29,16 @@ import com.google.gson.JsonSerializer;
  * @Time   17:06:19
  * @see
  */
+@Slf4j
 @Configuration
 public class GsonHttpMessageConfig {
 
     @Bean
     public GsonBuilder gsonBuilder()
     {
+    	log.info("[gsonBuilder method is called ]");
+				Logging.internalLogDetail();
+    	
         return new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class,
                         (JsonSerializer<LocalDateTime>) (date, type, context) ->
@@ -42,12 +51,24 @@ public class GsonHttpMessageConfig {
     @Bean
     public Gson gson(GsonBuilder gsonBuilder)
     {
+    	log.info("[gson method is called ]--" + "[input parameter = " + gsonBuilder + "]");
+
+				
+
+				Logging.internalLogDetail();
+
         return gsonBuilder.create();
     }
 
     @Bean
     public GsonHttpMessageConverter gsonHttpMessageConverter(Gson gson)
     {
+    	log.info("[gsonHttpMessageConverter method is called ]--" + "[input parameter = " + gson + "]");
+
+		
+
+		Logging.internalLogDetail();
+
         GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
         converter.setGson(gson);
         return converter;

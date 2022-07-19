@@ -9,13 +9,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Bit.microservice2mainService.business.abstracts.IUserService;
 import com.Bit.microservice2mainService.dataAccess.UserDao;
 import com.Bit.microservice2mainService.entities.User;
+import com.Bit.microservice2mainService.util.constants.Logging;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Cem Kok
@@ -24,6 +29,7 @@ import com.Bit.microservice2mainService.entities.User;
  * @see
  */	
 
+@Slf4j
 @Service
 public class UserService implements IUserService{
 	
@@ -44,7 +50,9 @@ public class UserService implements IUserService{
 	
 	@Override
 	public User addUser(User user) {
-		
+		log.info("[addUser method is called ]--" + "[input parameter = " +user+ "]");
+
+				Logging.internalLogDetail();
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setCreateTime(LocalDateTime.now());
 		return  userDao.save(user);
@@ -54,6 +62,11 @@ public class UserService implements IUserService{
 	
 	@Override
 	 public Optional<User> findByUsername(String username){
+		log.info("[findByUsername method is called ]--" + "[input parameter =" +username+ "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(userDao.findByUsername(username))
+				+ "]");
+
+				Logging.internalLogDetail();
 		 
 		 return userDao.findByUsername(username);
 	 }
@@ -61,6 +74,12 @@ public class UserService implements IUserService{
 	
 	@Override
 	public List<User> findAllUsers(){
+		log.info("[findAllUsers method is called ]--" + "[input parameter =no args"+"]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(userDao.findAll())
+				+ "]");
+
+				Logging.internalLogDetail();
+		 
 		return userDao.findAll();
 	}
 	

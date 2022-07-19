@@ -12,9 +12,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.Bit.microservice2mainService.util.constants.Logging;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Cem Kok
@@ -22,7 +25,7 @@ import lombok.NoArgsConstructor;
  * @Time   14:59:07
  * @see
  */
-
+@Slf4j
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,36 +43,58 @@ public class UserPrincipal implements UserDetails {
 
 		@Override
 		public String getPassword() {
+			log.info("[getPassword method is called ]--" + "[input parameter = no args"+"]");
+
+			Logging.internalLogDetail();
+			
 			
 			return password;
 		}
 
 		@Override
 		public String getUsername() {
+			log.info("[getUsername method is called ]--" + "[input parameter = no args"+"]");
+
+			Logging.internalLogDetail();
 			
 			return username;
 		}
 
 		@Override
 		public boolean isAccountNonExpired() {
+			log.info("[isAccountNonExpired method is called ]--" + "[input parameter = no args"+"]");
+
+			Logging.internalLogDetail();
+			
 			
 			return true;
 		}
 
 		@Override
 		public boolean isAccountNonLocked() {
+			log.info("[isAccountNonLocked method is called ]--" + "[input parameter = no args"+"]");
+
+			Logging.internalLogDetail();
 			
 			return true;
 		}
 
 		@Override
 		public boolean isCredentialsNonExpired() {
+			log.info("[isCredentialsNonExpired method is called ]--" + "[input parameter = no args"+"]");
+
+			Logging.internalLogDetail();
+			
 		
 			return true;
 		}
 
 		@Override
 		public boolean isEnabled() {
+			log.info("[isEnabled method is called ]--" + "[input parameter = no args"+"]");
+
+			Logging.internalLogDetail();
+			
 			
 			return true;
 		}

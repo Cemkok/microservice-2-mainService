@@ -41,7 +41,7 @@ import com.google.gson.JsonElement;
  * @param id
  * @return
  */	
-		  JsonElement getByCustomerIdResult(Long id);
+		  JsonElement getByCustomerId(Long id);
 		  
 		  }
 		 

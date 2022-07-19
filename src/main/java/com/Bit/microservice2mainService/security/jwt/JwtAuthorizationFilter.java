@@ -17,12 +17,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.Bit.microservice2mainService.util.constants.Logging;
+
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   18:47:42
  * @see
  */
+@Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	
 	 
@@ -33,6 +38,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException 
 	{
+		 log.info("[doFilterInternal method is called ]--" + "[input parameter =no args"+ "]");
+			
+			Logging.internalLogDetail();
 		Authentication authentication = jwtProvider.getAuhentication(request);
 		
 		if(authentication != null && jwtProvider.isTokenValid(request)) 

@@ -23,6 +23,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.Bit.microservice2mainService.security.jwt.JwtAuthorizationFilter;
+import com.Bit.microservice2mainService.util.constants.Logging;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Cem Kok
@@ -30,6 +33,7 @@ import com.Bit.microservice2mainService.security.jwt.JwtAuthorizationFilter;
  * @Time   15:16:24
  * @see
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -46,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		log.info("[configure method is called ]--" + "[input parameter =" +http+ "]");
+
+		Logging.internalLogDetail();
 	  http.csrf().disable();
 	  http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	 
@@ -62,18 +69,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-		.userDetailsService(customUserDetailsService)
+		log.info("[configure method is called ]--" + "[input parameter =" +auth+ "]");
+
+		Logging.internalLogDetail();
+		
+		auth.userDetailsService(customUserDetailsService)
 		.passwordEncoder(passwordEncoder());
 		
 	}
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		log.info("[passwordEncoder method is called ]--" + "[input parameter ="+"]");
+
+		Logging.internalLogDetail();
 		return  new BCryptPasswordEncoder();
 	}
 		
 	@Bean
 	public JwtAuthorizationFilter JwtAuthorizationFilter() {
+		log.info("[JwtAuthorizationFilter method is called ]--" + "[input parameter = no args"+"]");
+
+		Logging.internalLogDetail();
 		
 		return new JwtAuthorizationFilter();
 		
@@ -84,7 +100,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
-			
+		log.info("[corsConfigurer method is called ]--" + "[input parameter = no args"+"]");
+
+		Logging.internalLogDetail();
+		
 			return new WebMvcConfigurer() {
 				
 				public void addCorsMapping (CorsRegistry registry) {
