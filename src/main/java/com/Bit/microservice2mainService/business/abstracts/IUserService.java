@@ -11,10 +11,10 @@ import java.util.Optional;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
- * @author cemko
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   13:42:22
- * @See
+ * @see
  */
 public interface IUserService {
 

@@ -12,10 +12,10 @@ import org.springframework.security.core.Authentication;
 import com.Bit.microservice2mainService.security.UserPrincipal;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   18:11:17
- * @See
+ * @see
  */
 public interface IJwtProvider {
 

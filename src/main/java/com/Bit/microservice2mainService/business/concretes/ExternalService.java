@@ -4,9 +4,11 @@
 
   package com.Bit.microservice2mainService.business.concretes;
   
-  import java.util.List;
+
   
-  import org.springframework.beans.factory.annotation.Autowired; import
+  import org.springframework.beans.factory.annotation.Autowired;
+
+import
   org.springframework.stereotype.Service;
   
   import com.Bit.microservice2mainService.business.abstracts.IExternalService;
@@ -15,10 +17,10 @@
   com.google.gson.JsonElement;
   
  /**
-	 * @author Cem Kök
+	 * @author Cem Kok
 	 * @Date 13 Tem 2022
 	 * @Time 18:33:57
-	 * @See
+	 * @see
 	 */
 
   
@@ -30,7 +32,7 @@
 	  	
 	  
 		  
-		  @Override public JsonElement saveCustomer(JsonElement requestBody) {
+		  @Override public JsonElement addCustomer(JsonElement requestBody) {
 		  
 		  return
 		  RetrofitUtils.executeInBlock(externalServiceRequest.saveCustomer(requestBody)
@@ -46,9 +48,15 @@
 		  
 		  
 		  
-		  @Override public List<JsonElement> getAllCustomers() {
+		  @Override public JsonElement getAllCustomers(int pageNo, int pageSize) {
 		  System.out.println("ben çalıştım"); return
-		  RetrofitUtils.executeInBlock(externalServiceRequest.getAllCustomers()); } }
+		  RetrofitUtils.executeInBlock(externalServiceRequest.getAllCustomers(pageNo, pageSize)); } 
+  
+  
+  	@Override public JsonElement getByCustomerIdResult(Long id) {
+	  System.out.println("ben çalıştım");
+	  
+	  return RetrofitUtils.executeInBlock(externalServiceRequest.getByCustomerIdResult(id)); } }
 		  
 		  
 		  

@@ -19,10 +19,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   13 Tem 2022
  * @Time   17:32:49 
- * @See
+ * @see
  */
 @Configuration
 public class RetrofitConfiguration {

@@ -18,10 +18,10 @@ import com.Bit.microservice2mainService.dataAccess.UserDao;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
- * @author cemko
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   13:42:07
- * @See
+ * @see
  */	
 
 @Service

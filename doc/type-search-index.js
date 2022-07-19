@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"com.Bit.microservice2mainService.controller","l":"ExternalController"}];updateSearchResults();

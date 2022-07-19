@@ -18,10 +18,10 @@ import com.Bit.microservice2mainService.business.abstracts.IUserService;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   13 Tem 2022
  * @Time   15:21:46
- * @See
+ * @see
  */
 @RestController
 @RequestMapping ("api/authentication")

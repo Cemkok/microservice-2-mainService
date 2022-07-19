@@ -15,10 +15,10 @@ import com.Bit.microservice2mainService.business.abstracts.IUserService;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
- * @author cemko
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   14:44:35
- * @See
+ * @see
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

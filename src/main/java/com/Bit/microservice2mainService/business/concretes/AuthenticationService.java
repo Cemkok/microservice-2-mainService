@@ -17,10 +17,10 @@ import com.Bit.microservice2mainService.security.UserPrincipal;
 import com.Bit.microservice2mainService.security.jwt.IJwtProvider;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   13 Tem 2022
  * @Time   14:48:19
- * @See
+ * @see
  */
 
 @Service

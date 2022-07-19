@@ -34,10 +34,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
- * @author cemko
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   18:08:49
- * @See
+ * @see
  */
 
 @Component

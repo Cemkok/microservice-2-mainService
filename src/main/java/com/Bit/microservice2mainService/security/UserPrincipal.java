@@ -17,10 +17,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * @author cemko
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   14:59:07
- * @See
+ * @see
  */
 
 @Getter

@@ -8,10 +8,10 @@ package com.Bit.microservice2mainService.business.abstracts;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   13 Tem 2022
  * @Time   14:56:26
- * @See
+ * @see
  */
 public interface IAuthenticationService {
 

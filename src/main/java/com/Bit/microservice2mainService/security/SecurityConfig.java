@@ -25,10 +25,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.Bit.microservice2mainService.security.jwt.JwtAuthorizationFilter;
 
 /**
- * @author cemko
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   15:16:24
- * @See
+ * @see
  */
 @Configuration
 @EnableWebSecurity

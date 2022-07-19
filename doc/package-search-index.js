@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.Bit.microservice2mainService.controller"}];updateSearchResults();

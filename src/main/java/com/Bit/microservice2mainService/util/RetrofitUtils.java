@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   14 Tem 2022
  * @Time   19:13:39
  * @See

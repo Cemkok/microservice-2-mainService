@@ -18,10 +18,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   12 Tem 2022
  * @Time   18:47:42
- * @See
+ * @see
  */
 public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	

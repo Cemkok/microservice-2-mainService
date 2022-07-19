@@ -19,10 +19,10 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
 /**
- * @author Cem Kök
+ * @author Cem Kok
  * @Date   13 Tem 2022
  * @Time   17:06:19
- * @See
+ * @see
  */
 @Configuration
 public class GsonHttpMessageConfig {
