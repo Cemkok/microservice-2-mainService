@@ -50,14 +50,13 @@ import lombok.extern.slf4j.Slf4j;
 		  }
 		  
 		  
-		  
-		  @Override public void deleteCustomer(int customerId) {
+		
+		@Override public JsonElement deleteCustomer(Long customerId) {
 			  log.info("[ExternalService deleteCustomer method is called ]--" + "[input parameter ="+customerId+"]");
 				
 				Logging.internalLogDetail();
 		 
-		  RetrofitUtils.executeInBlock(externalServiceRequest.deleteCustomer(customerId
-		  )); }
+		 return RetrofitUtils.executeInBlock(externalServiceRequest.deleteCustomer(customerId )); }
 		  
 		  
 		  
@@ -71,11 +70,23 @@ import lombok.extern.slf4j.Slf4j;
   
   
   	@Override public JsonElement getByCustomerId(Long id) {
-		  log.info("[ExternalService getByCustomerId method is called ]--" + "[input parameter =pageNo-pageSize"+id+"]");
+		  log.info("[ExternalService getByCustomerId method is called ]--" + "[input parameter = "+id+"]");
 			
 			Logging.internalLogDetail(); 
 	  
-	  return RetrofitUtils.executeInBlock(externalServiceRequest.getByCustomerIdResult(id)); } }
+	  return RetrofitUtils.executeInBlock(externalServiceRequest.getCustomerById(id)); } 
+ 
+  
+
+@Override public JsonElement findAllFilteredByCompanyName(String companyName) {
+	  log.info("[findAllFilteredByCompanyName  method is called ]--" + "[input parameter ="+companyName+"]");
+		
+		Logging.internalLogDetail(); 
+  
+  return RetrofitUtils.executeInBlock(externalServiceRequest.findAllFilteredByCompanyName(companyName)); } }
+	
+  	
+  
 		  
 		  
 		  

@@ -200,16 +200,17 @@ public class ExternalController {
 		return ResponseEntity.ok(externalService.addCustomer(customer));
 	}
 
-	@DeleteMapping("{customerId}")
-	public ResponseEntity<?> deleteCustomer(@PathVariable int customerId) {
-		
-		externalService.deleteCustomer(customerId);
+	@DeleteMapping("/deleteCustomerById/{customerId}")
+	public ResponseEntity<?> deleteCustomer(@PathVariable Long customerId) {
 		log.info("[deleteCustomer method is called ]--" + "[input parameter = " + customerId + "]--"+ "[output parameter = "
 				+ ToStringBuilder.reflectionToString(new ResponseEntity<>( HttpStatus.OK))
 				+ "]");
 
 				Logging.internalLogDetail();
-		return new ResponseEntity<>(HttpStatus.OK);
+		
+		
+		
+		return new ResponseEntity<>(externalService.deleteCustomer(customerId), HttpStatus.OK);
 	}
 	
 
@@ -225,10 +226,10 @@ public class ExternalController {
 		
 		return ResponseEntity.ok(externalService.getAllCustomers(pageNo, pageSize));
 	}
-	@GetMapping("/getByIdResult/{id}")
+	@GetMapping("/getByCustomerId/{id}")
 	public ResponseEntity<?>getByCustomerId(@PathVariable Long id) {
-		log.info("[getByCustomerId method is called ]--" + "[input parameter = pageNo-pageSize" +id+ "]--"+ "[output parameter = "
-				+ ToStringBuilder.reflectionToString(ResponseEntity.ok(externalService.getByCustomerId(id)))
+		log.info("[getByCustomerId method is called ]--" + "[input parameter = " +id+ "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(ResponseEntity.ok(externalService.getByCustomerId(id) + "for logging getByCustomerId()"))
 				+ "]");
 
 				Logging.internalLogDetail();
@@ -236,5 +237,15 @@ public class ExternalController {
 		
 		
 		return ResponseEntity.ok(externalService.getByCustomerId(id));
+	}
+	@GetMapping("/{companyName}")
+	public ResponseEntity<?>findAllFilteredByCompanyName(@PathVariable String companyName) {
+		log.info("[findAllFilteredByCompanyName method is called ]--" + "[input parameter = " +companyName+ "]--"+ "[output parameter = "
+				+ ToStringBuilder.reflectionToString(ResponseEntity.ok(externalService.findAllFilteredByCompanyName(companyName))+"for logging getByCustomerId()")
+				+ "]");
+
+				Logging.internalLogDetail();
+		
+		return ResponseEntity.ok(externalService.findAllFilteredByCompanyName(companyName));
 	}
 }

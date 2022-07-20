@@ -32,16 +32,25 @@ import com.google.gson.JsonElement;
 
       JsonElement addCustomer(JsonElement requestBody);
   
- /**
-	 * @param customerId
-	 */
-		  void deleteCustomer(int customerId);
+
 
 /**
  * @param id
  * @return
  */	
 		  JsonElement getByCustomerId(Long id);
+
+/**
+ * @param companyName
+ * @return
+ */
+JsonElement findAllFilteredByCompanyName(String companyName);
+
+/**
+ * @param customerId
+ * @return
+ */
+JsonElement deleteCustomer(Long customerId);
 		  
 		  }
 		 

@@ -16,12 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Logging {
 	/**
-	 * This method delays log processing by 10 seconds.
+	 * This method delays log processing by 1 seconds.
 	 * 
 	 */
 	public static String internalLogDetail() {
 		try {
-			log.info("internalLogDetail methodu has called");
+			log.info("log delayed by 1 sec. ");
 			Thread.sleep(1000);
 			
 		} catch (InterruptedException e) {

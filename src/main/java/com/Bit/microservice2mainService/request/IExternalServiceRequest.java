@@ -5,7 +5,7 @@
  */
 package com.Bit.microservice2mainService.request;
 
-import java.util.List;
+
 
 import com.google.gson.JsonElement;
 
@@ -25,32 +25,27 @@ import retrofit2.http.Path;
 
 
 public interface IExternalServiceRequest {
-	@POST("/api/customer")
+	@POST("/api/customer/add")
 	Call<JsonElement> saveCustomer(@Body JsonElement requestBody);
 	
-	@DELETE("/api/customer/delete/{customerId}")
-	Call<Void> deleteCustomer(@Path("customerId") int customerId);
+	
+	@DELETE("/api/customer/deleteById/{customerId}")
+	Call<JsonElement> deleteCustomer(@Path("customerId") Long customerId);
 	
 	@GET("/api/customer/getAllByPage/{pageNo}/{pageSize}")
 	Call<JsonElement> getAllCustomers(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
 	
 	@GET("/api/customer/getById/{id}")
 	Call<JsonElement> getCustomerById(@Path("id") Long customerId );
-	@GET("/api/customer/getByIdResult/{id}")
-	Call<JsonElement> getCustomerByIdResult(@Path("id") Long customerId );
 	
 	@GET("/api/customer/{companyName}")
-	Call<List<JsonElement>> getCustomerFilteredByCompanyName(@Path("companyName") String companyName);
+	Call<JsonElement> findAllFilteredByCompanyName(@Path("companyName") String companyName);
 	
 	@GET("/api/customer/getAllSortedDesc")
-	Call<List<JsonElement>> getCustomerSortedDesc();
+	Call<JsonElement> getCustomerSortedDesc();
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	@GET("/api/customer/getByIdResult/{id}")
-	Call <JsonElement> getByCustomerIdResult(@Path("id") Long customerId );
+
+	
 	
 	
 	
