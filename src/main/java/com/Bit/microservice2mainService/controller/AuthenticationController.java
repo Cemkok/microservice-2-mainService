@@ -16,8 +16,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.Bit.microservice2mainService.business.abstracts.IAuthenticationService;
 import com.Bit.microservice2mainService.business.abstracts.IUserService;
+import com.Bit.microservice2mainService.core.constants.Logging;
 import com.Bit.microservice2mainService.entities.User;
-import com.Bit.microservice2mainService.util.constants.Logging;
 
 import lombok.extern.slf4j.Slf4j;
 

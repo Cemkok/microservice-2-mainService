@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
-import com.Bit.microservice2mainService.util.constants.Logging;
+import com.Bit.microservice2mainService.core.constants.Logging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;

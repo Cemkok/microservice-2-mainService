@@ -1,1 +1,13 @@
+com.Bit.microservice2mainService
+com.Bit.microservice2mainService.business.abstracts
+com.Bit.microservice2mainService.business.concretes
+com.Bit.microservice2mainService.config
 com.Bit.microservice2mainService.controller
+com.Bit.microservice2mainService.dataAccess
+com.Bit.microservice2mainService.entities
+com.Bit.microservice2mainService.request
+com.Bit.microservice2mainService.security
+com.Bit.microservice2mainService.security.jwt
+com.Bit.microservice2mainService.core
+com.Bit.microservice2mainService.core.constants
+com.Bit.microservice2mainService.core.results

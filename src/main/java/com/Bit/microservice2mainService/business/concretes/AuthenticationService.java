@@ -12,10 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.Bit.microservice2mainService.business.abstracts.IAuthenticationService;
+import com.Bit.microservice2mainService.core.constants.Logging;
 import com.Bit.microservice2mainService.entities.User;
 import com.Bit.microservice2mainService.security.UserPrincipal;
 import com.Bit.microservice2mainService.security.jwt.IJwtProvider;
-import com.Bit.microservice2mainService.util.constants.Logging;
 
 import lombok.extern.slf4j.Slf4j;
 

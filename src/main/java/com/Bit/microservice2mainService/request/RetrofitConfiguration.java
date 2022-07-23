@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
-import com.Bit.microservice2mainService.util.constants.Logging;
+import com.Bit.microservice2mainService.core.constants.Logging;
 import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;

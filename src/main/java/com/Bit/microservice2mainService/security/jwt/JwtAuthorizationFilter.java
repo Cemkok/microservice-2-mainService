@@ -17,7 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.Bit.microservice2mainService.util.constants.Logging;
+import com.Bit.microservice2mainService.core.constants.Logging;
 
 import lombok.extern.slf4j.Slf4j;
 

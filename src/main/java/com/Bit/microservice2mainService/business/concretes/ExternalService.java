@@ -13,9 +13,9 @@ import
   org.springframework.stereotype.Service;
   
   import com.Bit.microservice2mainService.business.abstracts.IExternalService;
-  import com.Bit.microservice2mainService.request.IExternalServiceRequest;
-  import com.Bit.microservice2mainService.util.RetrofitUtils;
-import com.Bit.microservice2mainService.util.constants.Logging;
+import com.Bit.microservice2mainService.core.RetrofitUtils;
+import com.Bit.microservice2mainService.core.constants.Logging;
+import com.Bit.microservice2mainService.request.IExternalServiceRequest;
 import
   com.google.gson.JsonElement;
 

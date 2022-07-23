@@ -27,8 +27,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.Bit.microservice2mainService.core.constants.Logging;
 import com.Bit.microservice2mainService.security.UserPrincipal;
-import com.Bit.microservice2mainService.util.constants.Logging;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

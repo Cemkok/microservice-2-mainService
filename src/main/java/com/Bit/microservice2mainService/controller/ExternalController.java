@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Bit.microservice2mainService.business.abstracts.IExternalService;
-import com.Bit.microservice2mainService.util.constants.Logging;
+import com.Bit.microservice2mainService.core.constants.Logging;
 import com.google.gson.JsonElement;
 
 import lombok.extern.slf4j.Slf4j;
