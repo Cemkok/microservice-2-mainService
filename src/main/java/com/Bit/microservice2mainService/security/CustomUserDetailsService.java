@@ -45,6 +45,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	/**
 	 * This method finds users by username.
+	 * @return UserPrincipal object
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

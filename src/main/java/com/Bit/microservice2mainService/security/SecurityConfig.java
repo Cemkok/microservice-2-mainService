@@ -146,7 +146,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				public void addCorsMapping (CorsRegistry registry) {
 					registry.addMapping("/**")
 					.allowedOrigins("*")
-					.allowedOrigins("http://localhost:5555/swagger-ui/")
 					.allowedMethods("*");
 					
 				}

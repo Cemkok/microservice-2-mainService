@@ -39,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 		  
 		  @Override public JsonElement addCustomer(JsonElement requestBody) {
 				log.info("[ExternalService addCustomer method is called ]--" + "[input parameter ="+requestBody+"]");
+				
 						
 						Logging.internalLogDetail();
 				 
