@@ -11,8 +11,10 @@ import org.springframework.context.annotation.PropertySource;
  * @Time   14:50:18
  * @see This class is the main class of the project, project runs from this class
  */
+
 @PropertySource("classpath:application-${spring.profiles.active:default}.properties")
 @SpringBootApplication
+
 public class Microservice2MainServiceApplication {
 
 	/**
