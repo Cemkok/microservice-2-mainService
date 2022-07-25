@@ -29,6 +29,11 @@ import com.Bit.microservice2mainService.entities.User;
  */
 public interface UserDao extends JpaRepository<User, Long> {
 	
+	/**
+	 * This method finds users by username.
+	 * @param username
+	 * @return  Optional<User>
+	 */
 	Optional<User> findByUsername(String username);
 	
 	

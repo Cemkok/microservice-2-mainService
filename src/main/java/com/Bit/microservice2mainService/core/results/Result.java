@@ -1,6 +1,11 @@
 package com.Bit.microservice2mainService.core.results;
 
-
+/**
+ * This class is used to return a Result object and its subclasses.
+ * @author Cem Kok
+ * @Date   25 Tem 2022
+ * @Time   21:11:12
+ */
 
 public class Result {
    private boolean success;

@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * This CustomerController class is a RestController. It accepts and directs requests for external service, and sends a response depending on the situation.
  * @author Cem Kok
  * @Date 14 Tem 2022
  * @Time 19:41:40
@@ -188,9 +189,9 @@ public class ExternalController {
 	@Autowired
 	private IExternalService externalService;
 	/**
-	 * 
+	 * This method sends the customer object from the specified path to the externalService class to add.
 	 * @param customer
-	 * @return
+	 * @return  DataResult { {user, message, success status}, HttpStatus.CREATED}
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<?> addCustomer(@RequestBody JsonElement customer) {
@@ -204,9 +205,10 @@ public class ExternalController {
 		return ResponseEntity.ok(externalService.addCustomer(customer));
 	}
  /**
+  * This method deletes the customer with that id if an existing id is entered
   * 
   * @param customerId
-  * @return
+  * @return  Result { { message, success status}, HttpStatus.OK}
   */
 	@DeleteMapping("/deleteCustomerById/{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable Long customerId) {
@@ -223,10 +225,10 @@ public class ExternalController {
 	
 
  /**
-  * 
+  * This method returns customers on an entered page number based on the entered page size.
   * @param pageNo
   * @param pageSize
-  * @return
+  * @return DataResult { {user, message, success status}}
   */
 	@GetMapping("/getAll/{pageNo}/{pageSize}")
 	public ResponseEntity<?> getAllCustomers(@PathVariable int pageNo, @PathVariable int pageSize) {

@@ -22,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
+ * This class is the retrofit configuration class, OkHttpClient is configured for HTTP requests and defined as the infrastructure of the retrofit.
  * @author Cem Kok
  * @Date   13 Tem 2022
  * @Time   17:32:49 
@@ -92,10 +93,11 @@ public class RetrofitConfiguration {
 	  
 	  }
 	  /**
-	   * 
+	   *This method creates a request "@Bean" for the external service.
+	   *
 	   * @param secureKeyBuilder
 	   * @param baseUrl
-	   * @return
+	   * @return Secure Key Builder
 	   */
 	  @Bean
 	  public IExternalServiceRequest externalServiceRequest(Retrofit.Builder secureKeyBuilder,

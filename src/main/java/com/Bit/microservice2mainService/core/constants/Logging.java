@@ -8,10 +8,11 @@ package com.Bit.microservice2mainService.core.constants;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 
  * @author Cem Kok
  * @Date   18 Tem 2022
  * @Time   16:37:13
- * @see
+ * 
  */
 @Slf4j
 public class Logging {

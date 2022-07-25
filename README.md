@@ -2,12 +2,17 @@
 
 This project was made with **Spring Boot** as a **Microservice**. 
  
- > Project version,                               **Java  8**.
-> package management tool,                      **Maven**,
-> for database access and ORM,                  **JPA Hibernate** 
-> for security,  								**Spring Security** 
-> for authorization, 							**JWT**
-> for communication beetwen microservices,      **Retrofit**
+ - Project version,                               **Java  8**.
+ - package management tool,                      **Maven**,
+
+ - for database access and ORM,                  **JPA Hibernate** 
+
+ - for security,  								**Spring Security** 
+
+ - for authorization, 							**JWT**
+
+ - for communication beetwen microservices,      **Retrofit**
+
 
 This microservice acts as a gateway, It basically has two functions as user management and API management. Therefore requests to other microservices go through this microservice first.
 
@@ -52,30 +57,74 @@ This microservice acts as a gateway, It basically has two functions as user mana
  layer usually provides us with the **DRY** principle and **clean code**, i.e. simpler code. 
  In this layer, I created the **results** package to increase the readability of the API outputs, the **mapping** package for the modelMapper library that does the object-dto-object conversion, the constants package for fixed messages and logging
 
- - **Security Layer**
+****************************************************************************************************************************************************************************************************************************************************************************************
+### Security
 
-This layer is the web security configuration that gives us transaction security.  The spring security library was used to secure the Spring application. Spring security stands between client and application, providing the possibility to configure which data and operations are served to which users.I created security package for security configuration.
+****************************************************************************************************************************************************************************************************************************************************************************************
+
+This is the web security configuration that gives us transaction security.  The spring security library was used to secure the Spring application. Spring security stands between client and application, providing the possibility to configure which data and operations are served to which users.I created security package for security configuration.
  
   <br>
  I created the SecurityConfig class in the security suite and extended it with the WebSecurityConfigurerAdapter class provided by Spring Security. I used @EnableWebSeucirty to enable web security and @Configuration annotation to define bean objects. and I overrode the config method that takes parameters of type **AuthenticationManagerBuilder** to identify this user. 
- 
+
  <br>
- In this method we can define the user and its role and also encode the password. I encoded the password in type **BycrypPasswordEncoder**. I also configured the authorization using the HttpSecurity object with the configuration method that takes HttpSecurity as a parameter. All requests require security and I implemented this by calling the super.configure() method with it set by default, I disabled csrf, , authorized the requests, set http sessions. I have configured cors configuration using WebMvcConfigurer object.
+ 
+ In this method we can define the user and its role and also encode the password. I encoded the password in type  
+ **BycrypPasswordEncoder**.  I also configured the authorization using the HttpSecurity object with the configuration method that takes HttpSecurity as a parameter. All requests require security and I implemented this by calling the super.configure() method with it set by default, I disabled csrf, , authorized the requests, set http sessions. I have configured cors configuration using WebMvcConfigurer object.
  	
  <br>
  The default user service in Spring Security is the UserDetailsService interface. I implemented this interface by creating the CustomerUserDetailsService concrete class. I added @Service annotation so that it can be a spring service.I overrode the loadUserByUsername method to authorize by user name, injected the user service interface using the dependency injection pattern to access user information, declared spring with @Autowired annotation for this interface to create a bean object. Spring provides UserDetails interface that contains user details, since this interface is abstract, I created a concrete class named UserPrincipal and implemented UserDetails.
+  
+  <br>
+  
+************************************************************************************************************************************************************
+
+### JSON Web Token
+
+****************************************************************************************************************************************************************************************************************************************************************************************
  
- - **JWT**
- j wt is used for authorization, not authentication.
+ > In this package, I created the JwtProvider class and its interface. I used @Component annotation to declare that there is a spring bean.
+ I assigned the public and private keys that I defined in the application.properties file to the constructor variable and the expiration date to the JwtProvider field with @Value annotation.I declared that I will create an RSA algorithm by creating a KeyFactory method. I created methods for token generation, client validation, token validation, extracting token from Http header.
+ 
+ > A special filter is required for Spring security, I created JwtAuthorizationFilter class for it. A database call is required to get the principal or authenticated user so I extended the class with OncePerRequestFilter. OncePerRequestFilter's doFilterInternal method filters the unfiltered request, ignoring the filtered ones.
+
+****************************************************************************************************************************************************************************************************************************************************************************************
+
+### Communication between microservices.
+
+****************************************************************************************************************************************************************************************************************************************************************************************
+
+- **Retrofit** 
+
+ > Retrofit is a wrapper library for converting interfaces to okHttp calls. When the interface calls it, it returns the corresponding call object, but if we don't call the enqueue or execute, it will not make a request. To summarize, the connection between the microservices and the gateway is provided by using a retrofit on the gateway. I used Gson converter to convert json object to Pojo classes.I added the Retrofit properties to the application.properties file. A default request is created to connect the microservices. 
+ 
+ > I created the RetrofitConfiguration class inside the request package and added the @Configuration annotation to be able to define the spring beans in the class. I assigned the time-out period to the field with the @value annotation from the application.properties file.
+ 
+ >I created OkHttpClient.Builder method to assign read, write, handshake values. Then I created your OkHttpClient method to create a secure http client.Finally, I created the Retrofit.builder method to create a wrapper retrofit structure.
+ 
+ > I created the IExternalServiceRequest interface inside the request package to define the retrofit endpoints. Call methods created in the IExternalServiceRequest interface are called from the service class and send to the controller in the service class.
+ 
+ 
+ 
+ - **Gson**
+ 
+ I used Gson library to serialize and deserialize json data. I created GsonHttpMessageConfig class inside the config package. I added @Configuration annotation to define Spring beans. I defined the GsonBuilder method for date serialization and deserialization. I created a Gson object to use from GsonBuilder. Finally, I added a Gson object as a parameter to the GsonMessageConverter.
+ 
+
+
+ 
+ 
  
 ```mermaid
 
 flowchart RL
-subgraph  sec [Security]
- db[(Database)]---->|"Java Persistance API -> JPA" |dao["Data Access Layer (DAO)"]  ----> |Interface CustomerDao|service["Business Layer (Service)"] ----> |Interface CustomerService|UI["UI Layer (Controller)"] 
-    dao---->|"Java Persistance API -> JPA" |db
-    service---->|Interface CustomerDao|dao
-    UI---->|Interface CustomerService|service
+ subgraph SECURITY
+ direction LR
+subgraph  sec [N-Tier]
+ db[(Database)]--->|"Java Persistance API -> JPA" |dao["Data Access Layer (DAO)"]  ---> |Interface CustomerDao|service["Business Layer (Service)"] ---> |Interface CustomerService|UI["UI Layer (Controller)"] 
+    dao--->|"Java Persistance API -> JPA" |db
+    service--->|Interface CustomerDao|dao
+    UI--->|Interface CustomerService|service
     
     end
 
@@ -91,13 +140,11 @@ ent[/ Customer \]
 
 
 end
-
+end
 
    
  core -.-> dao
 core -.->service
-   
-
 core -.->UI
 ent -.->service
 ent -.->UI
@@ -110,13 +157,12 @@ ent -.->UI
 
 
 
-
  	
  
- 
+***********************************************************************************************
 
 
-### What technologies were used?
+# What technologies were used?
 
 ***********************************************************************************************
 
@@ -324,30 +370,32 @@ Retrofit allows you to make both synchronous and asynchronous request to APIs.
 
 ##### 
 
- ## **Add Customer** ##
+ ## **Sign-up** ##
  
  
 *******************************************************************************
 
 - **Request**
 
- ` localhost:4444/api/customer/add `
+ ` localhost:5555/api/authentication/sign-up `
 
-POST /api/customer/add 
+POST /api/authentication/sign-up HTTP/1.1
 
-HTTP/1.1
-
-Host: localhost:4444
-
-Authorization: Basic base64(username:password)
+Host: localhost:5555
 
 Content-Type: application/json
 
-Content-Length: 56
+Content-Length: 74
+
 
 {
-    "customerName":"Cem",
-    "companyName":"BMW"
+
+    "username":"test4",
+    
+    "password":"test4",
+    
+    "name":"cem"
+
 }
 
 --------------------------------------------------------
@@ -356,29 +404,633 @@ Content-Length: 56
   
 
 	{
+	
+    "data": {
+    
+        "id": 4,
+        
+        "username": "test4",
+        
+        "password": "$2a$10$U4AG/.f2R0s05Qq3Ixmv9e9H.wsFqG3uX7j.lny4IUFU.2tM7ZKua",
+        
+        "name": "cem",
+        
+        "createTime": "2022-07-25T11:16:16.7421279"
+        
+    },
+    
+    "success": true,
+    
+    "message": "a.new.user.added"
+}
+  
+*********************************************************************************
+ 
+  ## **Sign-in** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+
+	
+ 
+ ` localhost:5555/api/authentication/sign-in `
+
+
+POST /api/authentication/sign-in HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Basic MzJCaXQ6MzJCaXQ=
+
+Content-Type: application/json
+
+Content-Length: 53
+
+
+
+{
+    "username":"test4",
+    "password":"test4"
+}
+
+--------------------------------------------------------  
+
+ - **Response : TOKEN** 
+
+eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDgXye0KCnZNiqDLBFLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+*********************************************************************************
+ 
+  ## **add customer** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+	
+	
+ 
+ ` localhost:5555/gateway/customer/add `
+
+
+POST /gateway/customer/add HTTP/1.1
+Host: localhost:5555
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDgXye0KCnZNiqDLBFLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+Content-Type: application/json
+Content-Length: 56
+
+{
+    "customerName":"Cem",
+    "companyName":"THY"
+}
+
+--------------------------------------------------------  
+
+ - **Response : SuccessDataResult** 
+
+{
+    
     "success": true,
     
     "message": "customer.added",
     
     "data": {
     
-        "id": 9,
+        "id": 10,
         
         "customerName": "Cem",
         
-        "companyName": "Ford",
+        "companyName": "THY",
         
-        "createTime": "2022-07-21T22:14:14.4192938"
+        "createTime": "2022-07-25T11:32:13.8113855"
+        
     }
-   
-  
-************************************************************************************************  
- ## **Delete Customer** ##
- ************************************************************************************************ 
+    
+}
+
+*********************************************************************************
  
+  ## **delete customer** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
 
 
+	
+	
+ 
+ ` localhost:5555/gateway/customer/deleteCustomerById/10 `
+
+DELETE /gateway/customer/deleteCustomerById/10 HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Bearer 
+
+eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDgXye0KCnZNiqD
+
+BFLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-
+
+uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-
+
+1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+
+--------------------------------------------------------  
+
+ - **Response : SuccessResult** 
+
+
+   {
+   
+    "success": true,
+    
+    "message": "customer.deleted.by.id : 10"
+    
+}
+
+*********************************************************************************
+ 
+  ## **get all customer  by pagination** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+	
+	
+ 
+ ` localhost:5555/gateway/customer/getAll/1/5 `
+
+GET /gateway/customer/getAll/1/5 
+
+HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Bearer 
+
+eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDgXye0KCnZNiqDLB
+
+FLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-
+
+uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-
+
+1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+--------------------------------------------------------  
+
+ - **Response : SuccessResult** 
+
+
+   {
+   
+    "success": true,
+    
+    "message": "All customers have listed",
+    
+    "data": [
+    
+        {
+        
+            "id": 1,
+            
+            "customerName": "Cem",
+            
+            "companyName": "32Bit"
+            
+        },
+        
+        {
+        
+            "id": 2,
+            
+            "customerName": "Cem",
+            
+            "companyName": "32Bit"
+            
+        },
+        
+        {
+        
+            "id": 3,
+            
+            "customerName": "Cem",
+            
+            "companyName": "Oracle"
+            
+        },
+        
+        {
+            "id": 4,
+            
+            "customerName": "Cem",
+            
+            "companyName": "Oracle"
+            
+        },
+        
+        {
+        
+            "id": 5,
+            
+            "customerName": "Cem",
+            
+            "companyName": "Microsoft"
+            
+        }
+    ]
+}
+
+*********************************************************************************
+ 
+  ## **get customer by id** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+
+ ` localhost:5555/gateway/customer/getByCustomerId/5 `
+
+GET /gateway/customer/getByCustomerId/5 
+
+HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Bearer 
+
+eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDgXye0KCnZNiqDLB
+
+FLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-
+
+uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-
+
+1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+--------------------------------------------------------  
+
+ - **Response : SuccessDataResult** 
+
+
+
+  {
   
+    "success": true,
+    
+    "message": "customer.found.by.id",
+    
+    "data": {
+    
+        "id": 5,
+        "customerName": "Cem",
+        
+        "companyName": "Microsoft",
+        
+        "createTime": "2022-07-17T01:24:06.895497"
+        
+    }
+    
+}
+
+
+*********************************************************************************
+ 
+  ## **filter by company name** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+
+ ` localhost:5555/gateway/customer/THY `
+
+GET /gateway/customer/THY
+
+ HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Bearer 
+
+
+eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDg
+
+Xye0KCnZNiqDLBFLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-
+
+uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-
+
+1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+--------------------------------------------------------  
+
+ - **Response : SuccessDataResult** 
+
+
+{
+    "success": true,
+    
+    "message": "customer.found.by.companyName",
+    
+    "data": [
+    
+        {
+        
+            "id": 11,
+            
+            "customerName": "Jeff",
+            
+            "companyName": "THY"
+            
+        },
+        
+        {
+        
+            "id": 12,
+            
+            "customerName": "Elon",
+            
+            "companyName": "THY"
+            
+        },
+        
+        {
+        
+            "id": 13,
+            
+            "customerName": "Bill",
+            
+            "companyName": "THY"
+            
+        }
+        
+    ]
+    
+}
+
+*********************************************************************************
+ 
+  ## **filter by company name** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+
+ ` localhost:5555/gateway/customer/THY `
+
+GET /gateway/customer/THY
+
+ HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Bearer 
+
+
+eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDg
+
+Xye0KCnZNiqDLBFLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-
+
+uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-
+
+1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+--------------------------------------------------------  
+
+ - **Response : SuccessDataResult** 
+
+
+{
+    "success": true,
+    
+    "message": "customer.found.by.companyName",
+    
+    "data": [
+    
+        {
+        
+            "id": 11,
+            
+            "customerName": "Jeff",
+            
+            "companyName": "THY"
+            
+        },
+        
+        {
+        
+            "id": 12,
+            
+            "customerName": "Elon",
+            
+            "companyName": "THY"
+            
+        },
+        
+        {
+        
+            "id": 13,
+            
+            "customerName": "Bill",
+            
+            "companyName": "THY"
+            
+        }
+        
+    ]
+    
+}
+
+*********************************************************************************
+ 
+  ## **sort by company name** ##
+ 
+ 
+*******************************************************************************
+
+- **Request**
+
+
+
+ ` localhost:5555/gateway/customer/getAllSortedByCompanyName `
+
+GET /gateway/customer/getAllSortedByCompanyName 
+
+HTTP/1.1
+
+Host: localhost:5555
+
+Authorization: Bearer
+ 
+ eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0NCIsInVzZXJJZCI6NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjU4ODIzNTQ0fQ.i75KmY0z2P3M_EEHaGgYCArtDg
+ 
+ Xye0KCnZNiqDLBFLUEjU5ZeSNYEZcAHii7NEwdxnoFLhEEVKAvjto-SDUH5n0CVeA3roRw8gH6pjJ-UfW-ZJ5IGr8Jf5Q9imyOiE5NC2TdAy-
+ 
+ uLEKc_5TkFgAtTP4k7BBTZpLnXleYR0AGB_NMVt6b8HjO36G7Jnt7AKupeeVxV5iQT06AIkCZE_ZRcEq-
+ 
+ 1w65kb2zoh1KBAOBgjZkRViSFOisTVcnzwXOHq2s3wxCmPmvXc4P_rYnMd9KxbL76Tmz2UXF9PzDZilEkHeDbVe-YVtvHVAECs6H5IS2zNBYp0H5gH8IQl3-L2HPfQ
+
+--------------------------------------------------------  
+
+ - **Response : SuccessDataResult** 
+
+
+{
+
+    "success": true,
+    
+    "message": "customer.descending.sorted.by.company.name",
+    
+    "data": [
+    
+        {
+        
+            "id": 11,
+            
+            "customerName": "Jeff",
+            
+            "companyName": "THY",
+            
+            "createTime": "2022-07-25T13:04:38.11926"
+            
+        },
+        
+        {
+        
+            "id": 12,
+            
+            "customerName": "Elon",
+            
+            "companyName": "THY",
+            
+            "createTime": "2022-07-25T13:04:45.995129"
+            
+        },
+        
+        {
+        
+            "id": 3,
+            
+            "customerName": "Cem",
+            
+            "companyName": "Oracle",
+            
+            "createTime": "2022-07-17T00:56:42.569654"
+            
+        },
+        
+        
+        {
+        
+        
+            "id": 4,
+            
+            "customerName": "Cem",
+            
+            "companyName": "Oracle",
+            
+            "createTime": "2022-07-17T00:56:43.578356"
+            
+        },
+        
+        {
+        
+            "id": 5,
+            
+            "customerName": "Cem",
+            
+            "companyName": "Microsoft",
+            
+            "createTime": "2022-07-17T01:24:06.895497"
+            
+        },
+        
+        {
+        
+            "id": 6,
+            
+            "customerName": "Cem",
+            
+            "companyName": "IBM",
+            
+            "createTime": "2022-07-20T13:47:51.030206"
+            
+        },
+        
+        {
+        
+            "id": 8,
+            
+            "customerName": "Cem",
+            
+            "companyName": "BMW",
+            
+            "createTime": "2022-07-21T16:07:01.159526"
+            
+        },
+        
+        {
+        
+            "id": 1,
+            
+            "customerName": "S2K Cem",
+            
+            "companyName": "32Bit",
+            
+
+            "createTime": "2022-07-17T00:55:49.813837"
+            
+        },
+        
+        {
+        
+            "id": 2,
+            
+            "customerName": "Cem",
+            
+            "companyName": "32Bit",
+            "createTime": "2022-07-17T00:55:50.927043"
+        },
+        {
+            "id": 13,
+            "customerName": "Bill",
+            "companyName": "THY",
+            "createTime": "2022-07-25T13:05:12.150278"
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

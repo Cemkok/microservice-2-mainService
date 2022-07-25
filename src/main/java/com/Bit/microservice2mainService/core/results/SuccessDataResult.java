@@ -1,5 +1,12 @@
 package com.Bit.microservice2mainService.core.results;
 
+/**
+ * This class is used to return a SuccessDataResult object {true, T data, String message}.
+ * @author Cem Kok
+ * @Date   25 Tem 2022
+ * @Time   21:14:13
+ *
+ */
 public class SuccessDataResult<T> extends DataResult<T> {
 	/**
 	 * 
