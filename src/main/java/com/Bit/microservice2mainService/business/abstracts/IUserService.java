@@ -8,6 +8,8 @@ package com.Bit.microservice2mainService.business.abstracts;
 import java.util.List;
 import java.util.Optional;
 
+import com.Bit.microservice2mainService.core.results.DataResult;
+import com.Bit.microservice2mainService.core.results.Result;
 import com.Bit.microservice2mainService.entities.User;
 
 /**
@@ -19,20 +21,24 @@ import com.Bit.microservice2mainService.entities.User;
 public interface IUserService {
 
 	/**
+	 * This method adds a user.
 	 * @param user
-	 * @return
+	 * @return 
 	 */
-	User addUser(User user);
+	Result addUser(User user);
 
 	/**
+	 * This method finds user by name
 	 * @param username
-	 * @return
+	 * @return Optional<User> Object
 	 */
 	Optional<User> findByUsername(String username);
-
+	
+ 
 	/**
-	 * @return
+	 * This method returns all users.
+	 * @return All users
 	 */
-	List<User> findAllUsers();
+	DataResult<List<User>> findAllUsers();
 
 }

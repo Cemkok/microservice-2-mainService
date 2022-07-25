@@ -187,7 +187,11 @@ public class ExternalController {
 
 	@Autowired
 	private IExternalService externalService;
-
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 */
 	@PostMapping("/add")
 	public ResponseEntity<?> addCustomer(@RequestBody JsonElement customer) {
 
@@ -199,7 +203,11 @@ public class ExternalController {
 
 		return ResponseEntity.ok(externalService.addCustomer(customer));
 	}
-
+ /**
+  * 
+  * @param customerId
+  * @return
+  */
 	@DeleteMapping("/deleteCustomerById/{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable Long customerId) {
 		log.info("[deleteCustomer method is called ]--" + "[input parameter = " + customerId + "]--"+ "[output parameter = "
@@ -214,7 +222,12 @@ public class ExternalController {
 	}
 	
 
-
+ /**
+  * 
+  * @param pageNo
+  * @param pageSize
+  * @return
+  */
 	@GetMapping("/getAll/{pageNo}/{pageSize}")
 	public ResponseEntity<?> getAllCustomers(@PathVariable int pageNo, @PathVariable int pageSize) {
 		
@@ -226,6 +239,12 @@ public class ExternalController {
 		
 		return ResponseEntity.ok(externalService.getAllCustomers(pageNo, pageSize));
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/getByCustomerId/{id}")
 	public ResponseEntity<?>getByCustomerId(@PathVariable Long id) {
 		log.info("[getByCustomerId method is called ]--" + "[input parameter = " +id+ "]--"+ "[output parameter = "
@@ -238,6 +257,11 @@ public class ExternalController {
 		
 		return ResponseEntity.ok(externalService.getByCustomerId(id));
 	}
+	/**
+	 * 
+	 * @param companyName
+	 * @return
+	 */
 	@GetMapping("/{companyName}")
 	public ResponseEntity<?>findAllFilteredByCompanyName(@PathVariable String companyName) {
 		log.info("[findAllFilteredByCompanyName method is called ]--" + "[input parameter = " +companyName+ "]--"+ "[output parameter = "
@@ -247,5 +271,14 @@ public class ExternalController {
 				Logging.internalLogDetail();
 		
 		return ResponseEntity.ok(externalService.findAllFilteredByCompanyName(companyName));
+	}
+	
+	@GetMapping("/getAllSortedByCompanyName")
+	public ResponseEntity<?>getCustomerSortedDesc() {
+		log.info("[getCustomerSortedDesc method is called ]--" + "[input parameter = no args"+ "]--");
+
+				Logging.internalLogDetail();
+		
+		return ResponseEntity.ok(externalService.getCustomerSortedDesc());
 	}
 }

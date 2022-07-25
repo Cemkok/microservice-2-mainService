@@ -17,6 +17,11 @@ import org.springframework.stereotype.Service;
 
 import com.Bit.microservice2mainService.business.abstracts.IUserService;
 import com.Bit.microservice2mainService.core.constants.Logging;
+import com.Bit.microservice2mainService.core.constants.Messages;
+import com.Bit.microservice2mainService.core.results.DataResult;
+import com.Bit.microservice2mainService.core.results.Result;
+import com.Bit.microservice2mainService.core.results.SuccessDataResult;
+import com.Bit.microservice2mainService.core.results.SuccessResult;
 import com.Bit.microservice2mainService.dataAccess.UserDao;
 import com.Bit.microservice2mainService.entities.User;
 
@@ -49,19 +54,22 @@ public class UserService implements IUserService{
 
 	
 	@Override
-	public User addUser(User user) {
+	public Result addUser(User user) {
 		log.info("[addUser method is called ]--" + "[input parameter = " +user+ "]");
 
 				Logging.internalLogDetail();
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setCreateTime(LocalDateTime.now());
-		return  userDao.save(user);
+		userDao.save(user);
+		
+		return  new SuccessDataResult<User>(user, Messages.addUser);
+				
 		
 	}
 	
 	
 	@Override
-	 public Optional<User> findByUsername(String username){
+	 public Optional< User> findByUsername(String username){
 		log.info("[findByUsername method is called ]--" + "[input parameter =" +username+ "]--"+ "[output parameter = "
 				+ ToStringBuilder.reflectionToString(userDao.findByUsername(username))
 				+ "]");
@@ -73,14 +81,14 @@ public class UserService implements IUserService{
 	
 	
 	@Override
-	public List<User> findAllUsers(){
+	public DataResult<List<User>> findAllUsers(){
 		log.info("[findAllUsers method is called ]--" + "[input parameter =no args"+"]--"+ "[output parameter = "
 				+ ToStringBuilder.reflectionToString(userDao.findAll())
 				+ "]");
 
 				Logging.internalLogDetail();
 		 
-		return userDao.findAll();
+		return new SuccessDataResult<List<User>>(userDao.findAll());
 	}
 	
 

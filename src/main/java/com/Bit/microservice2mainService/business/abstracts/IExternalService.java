@@ -4,10 +4,6 @@
 
   package com.Bit.microservice2mainService.business.abstracts;
   
- 
-
-
-
 import com.google.gson.JsonElement;
   
  /**
@@ -45,6 +41,13 @@ import com.google.gson.JsonElement;
  * @return
  */
 JsonElement findAllFilteredByCompanyName(String companyName);
+
+
+/**
+ * @param id
+ * @return
+ */	
+		  JsonElement getCustomerSortedDesc();
 
 /**
  * @param customerId

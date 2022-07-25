@@ -63,6 +63,7 @@ public class JwtProvider implements IJwtProvider {
 
 	public JwtProvider(@Value("${authentication.jwt.private-key}") String jwtPrivateKeyStr,
 			@Value("${authentication.jwt.public-key}") String jwtPublicKeyStr) {
+		
 
 		KeyFactory keyFactory = getKeyFactory();
 
@@ -137,7 +138,11 @@ public class JwtProvider implements IJwtProvider {
 		return true;
 
 	}
-
+	/**
+	 * This method extracts the bearer expression from the header and returns it to the token value.
+	 * @param request
+	 * @return Returns null if bearerToken is null otherwise token value is returned.
+	 */
 	private String resolveToken(HttpServletRequest request) {
 		log.info("[resolveToken method is called ]--" + "[input parameter =" + request + "]");
 
@@ -150,7 +155,10 @@ public class JwtProvider implements IJwtProvider {
 		return null;
 
 	}
-
+	/**
+	 * This method is used to specify the encryption algorithm used.
+	 * @return RSA 
+	 */
 	private KeyFactory getKeyFactory() {
 		log.info("[getKeyFactory method is called ]--" + "[input parameter =no args" + "]");
 

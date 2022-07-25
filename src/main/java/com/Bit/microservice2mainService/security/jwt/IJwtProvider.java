@@ -20,20 +20,23 @@ import com.Bit.microservice2mainService.security.UserPrincipal;
 public interface IJwtProvider {
 
 	/**
+	 * This method generates tokens using the UserPrincipal object.
 	 * @param authentication
-	 * @return
+	 * @return a new token
 	 */
 	String generateToken(UserPrincipal authentication);
 
 	/**
+	 * This method authenticates a request from the client.
 	 * @param request
 	 * @return
 	 */
 	Authentication getAuhentication(HttpServletRequest request);
 
 	/**
+	 * This method checks the validity period of the token.
 	 * @param request
-	 * @return
+	 * @return Returns false if the token is empty or out of date, and true if it is not expired.
 	 */
 	boolean isTokenValid(HttpServletRequest request);
 

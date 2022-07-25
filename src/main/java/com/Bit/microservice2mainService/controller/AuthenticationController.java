@@ -37,7 +37,11 @@ public class AuthenticationController {
 	@Autowired
 	private IUserService userService;
 	
-	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
 	@PostMapping("sign-up")
 	public ResponseEntity<?> signUp(@RequestBody User user){
 		
@@ -62,7 +66,11 @@ public class AuthenticationController {
 		return new ResponseEntity<>(userService.addUser(user), HttpStatus.CREATED);
 			
 	}
-	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
 	@PostMapping ("sign-in")
 		public ResponseEntity<?>  signIn(@RequestBody User user){
 		

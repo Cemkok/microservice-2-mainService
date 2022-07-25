@@ -84,7 +84,17 @@ import lombok.extern.slf4j.Slf4j;
 		
 		Logging.internalLogDetail(); 
   
-  return RetrofitUtils.executeInBlock(externalServiceRequest.findAllFilteredByCompanyName(companyName)); } }
+  return RetrofitUtils.executeInBlock(externalServiceRequest.findAllFilteredByCompanyName(companyName)); }
+
+
+
+	@Override
+	public JsonElement getCustomerSortedDesc() {
+log.info("[getCustomerSortedDesc  method is called ]--" + "[input parameter = no args"+"]");
+		
+		Logging.internalLogDetail(); 
+	return RetrofitUtils.executeInBlock(externalServiceRequest.getCustomerSortedDesc()); }
+	} 
 	
   	
   

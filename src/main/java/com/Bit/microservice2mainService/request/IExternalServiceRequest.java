@@ -25,6 +25,7 @@ import retrofit2.http.Path;
 
 
 public interface IExternalServiceRequest {
+	
 	@POST("/api/customer/add")
 	Call<JsonElement> saveCustomer(@Body JsonElement requestBody);
 	
@@ -41,7 +42,7 @@ public interface IExternalServiceRequest {
 	@GET("/api/customer/{companyName}")
 	Call<JsonElement> findAllFilteredByCompanyName(@Path("companyName") String companyName);
 	
-	@GET("/api/customer/getAllSortedDesc")
+	@GET("/api/customer/getAllSortedByCompanyName")
 	Call<JsonElement> getCustomerSortedDesc();
 
 

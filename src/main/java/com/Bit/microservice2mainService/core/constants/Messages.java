@@ -12,6 +12,9 @@ package com.Bit.microservice2mainService.core.constants;
  */
 public class Messages {
 	
+	public static final String addUser="a.new.user.added";
+	public static final String noUser="customer.not.found";
+	
 
 
 

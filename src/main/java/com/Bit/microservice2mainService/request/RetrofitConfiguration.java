@@ -34,6 +34,13 @@ public class RetrofitConfiguration {
 	 
 	  @Value("${retrofit.timeout}")
 	  private Long TIMEOUT_IN_SECS;
+	  
+	  /**
+	   *This method creates a secure http client.
+	   * @param secureKeyUsername
+	   * @param secureKeyPassword
+	   * @return Secure client
+	   */
 	  @Bean
 	  public OkHttpClient secureKeyClient(
 			  @Value("${service.security.secure-key-username}") String secureKeyUsername, 
@@ -52,16 +59,26 @@ public class RetrofitConfiguration {
 				  
 		  
 	  }
+	 
+	  /**
+	   * This method creates an OkHttp wrapper
+	   * @param secureKeyClient
+	   * @param gson
+	   * @return Retrofit wrapper
+	   */
 	  @Bean
 	   public Retrofit.Builder secureKeyBuilder(OkHttpClient secureKeyClient, Gson gson){
-		  log.info("[secureKeyBuilder method is called ]--" + "[input parameter ="+secureKeyClient+gson+"]");
+		  log.info("[secureKeyBuilder method is called ]--" + "[input parameter ="+secureKeyClient+"+"+gson+"]");
 			
 			Logging.internalLogDetail();
 		   return new Retrofit.Builder().client(secureKeyClient)
 				   .addConverterFactory(GsonConverterFactory.create(gson));
 		   
 	   }
-	  
+	  /**
+	   * This method builds OkHttp client. Sets the time-out for the connection.
+	   * @return Sets the timeout for the connection.
+	   */
 	  private OkHttpClient.Builder createDefaultClientBuilder(){
 		  log.info("[createDefaultClientBuilder method is called ]--" + "[input parameter =no args"+ "]");
 			
@@ -74,6 +91,12 @@ public class RetrofitConfiguration {
 	  
 	  
 	  }
+	  /**
+	   * 
+	   * @param secureKeyBuilder
+	   * @param baseUrl
+	   * @return
+	   */
 	  @Bean
 	  public IExternalServiceRequest externalServiceRequest(Retrofit.Builder secureKeyBuilder,
 	  
