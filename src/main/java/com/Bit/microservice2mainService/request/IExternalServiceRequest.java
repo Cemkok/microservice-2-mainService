@@ -127,7 +127,7 @@ public interface IExternalServiceRequest {
 	 * @param companyName
 	 * @return JsonElement { returns the response from the external service}
 	 */
-	@GET("/api/customer/{companyName}")
+	@GET("/api/customer/filteredByCompanyName/{companyName}")
 	Call<JsonElement> findAllFilteredByCompanyName(@Path("companyName") String companyName);
 
 	/**
