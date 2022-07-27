@@ -264,7 +264,7 @@ public class ExternalController {
 	 * @param companyName
 	 * @return
 	 */
-	@GetMapping("/{companyName}")
+	@GetMapping("/filteredByCompanyName/{companyName}")
 	public ResponseEntity<?>findAllFilteredByCompanyName(@PathVariable String companyName) {
 		log.info("[findAllFilteredByCompanyName method is called ]--" + "[input parameter = " +companyName+ "]--"+ "[output parameter = "
 				+ ToStringBuilder.reflectionToString(ResponseEntity.ok(externalService.findAllFilteredByCompanyName(companyName))+"for logging getByCustomerId()")
